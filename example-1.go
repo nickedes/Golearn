@@ -1,3 +1,4 @@
+// http://www.golangbootcamp.com/book/interfaces
 package main
 
 import (
@@ -13,10 +14,12 @@ func (u *User) Name() string {
 }
 
 type Namer interface {
+	// set of methods for Namer interface
 	Name() string
 }
 
 func Greet(n Namer) string {
+	// this interface param will accept any value as parameter which implements this interface
 	return fmt.Sprintf("Dear %s", n.Name())
 }
 

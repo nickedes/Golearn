@@ -5,12 +5,23 @@ import (
 	"fmt"
 )
 
-func main() {
+func Digest() string {
+	nonce := 0
 
-	s := "text string here!"
 	digest := sha256.New()
-	digest.Write([]byte("hello world\n"))
+	s := "text string here!"
 	digest.Write([]byte(s))
-	fmt.Println(digest.Sum(nil))
-	fmt.Printf("%x\n", digest.Sum(nil))
+
+	for {
+		digest.Write([]byte(nonce))
+		hashval := fmt.Sprintf("%x\n", digest.Sum(nil))
+		if hashval {
+			return hashval
+		}
+
+	}
+}
+
+func main() {
+	fmt.Println(Digest())
 }

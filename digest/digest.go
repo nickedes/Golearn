@@ -18,14 +18,15 @@ func Digest() string {
 	}
 
 	digest := sha256.New()
-	s := "t1ext string here!"
+	s := "text string here!"
 	digest.Write([]byte(s))
 	fmt.Println(digest.Sum(nil))
 	fmt.Printf("%x\n", digest.Sum(nil))
 	for {
-		digest.Write([]byte(strconv.Itoa(nonce)))
+		digest.Write([]byte(s + strconv.Itoa(nonce)))
 		hashval := fmt.Sprintf("%x", digest.Sum(nil))
 		if strings.HasPrefix(hashval, x) {
+			fmt.Println(nonce)
 			return hashval
 		}
 		nonce++

@@ -17,7 +17,7 @@ func sum(a []int, c chan int) {
 	for _, v := range a {
 		sum += v
 	}
-	c <- sum // send sum to c
+	c <- sum // send sum to channel c
 }
 
 func main() {
@@ -26,10 +26,10 @@ func main() {
 
 	a := []int{7, 2, 8, -9, 4, 0}
 
-	c := make(chan int)
+	c := make(chan int) // create channel c
 	go sum(a[:len(a)/2], c)
 	go sum(a[len(a)/2:], c)
-	x, y := <-c, <-c // receive from c
+	x, y := <-c, <-c // receive from channel c
 
 	fmt.Println(x, y, x+y)
 

@@ -29,7 +29,10 @@ func xorbinary(A []string) int64 {
 }
 
 func getXor(A []string) (string, []string) {
-
+	randomset := sample(A, 2)
+	xorVal := xorbinary(randomset)
+	xorString := string(xorVal)
+	return xorString, randomset
 }
 
 func main() {

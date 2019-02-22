@@ -2,14 +2,14 @@ package main
 
 import (
 	"fmt"
-	"math/rand"
+	random "math/rand"
 	"strconv"
 	"time"
 )
 
 func sample(A []string, x int) []string {
-	rand.Seed(time.Now().UnixNano())
-	randomize := rand.Perm(len(A))
+	random.Seed(time.Now().UnixNano())
+	randomize := random.Perm(len(A))
 
 	sampleslice := make([]string, 0)
 

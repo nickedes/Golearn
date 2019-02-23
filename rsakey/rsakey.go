@@ -5,6 +5,7 @@ import (
 	"crypto/rsa"
 	"encoding/json"
 	"fmt"
+	"math/big"
 )
 
 type msgType struct {
@@ -26,9 +27,14 @@ func main() {
 		if errMarshal == nil {
 			var decoded msgType
 			errUnmarshall := json.Unmarshal(encoded, &decoded)
-			if errUnmarshall == nil {
-				fmt.Println(decoded)
-				// fmt.Println(decoded.Cmp(rsaPublicKey.N) == 0)
+			if errUnmarshall == nil && decoded.Type == "publicKey" {
+				receivedPublic := big.NewInt(0)
+				errUnmarshallkey := json.Unmarshal(decoded.Data, &receivedPublic)
+				if errUnmarshallkey == nil {
+					fmt.Println(receivedPublic.Cmp(rsaPublicKey.N) == 0) // To check got the correct N or not
+				} else {
+					fmt.Println("Error : ", errUnmarshallkey)
+				}
 			} else {
 				fmt.Println("UnMarshal error", errUnmarshall)
 			}

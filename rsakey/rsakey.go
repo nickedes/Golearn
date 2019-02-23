@@ -5,8 +5,12 @@ import (
 	"crypto/rsa"
 	"encoding/json"
 	"fmt"
-	"math/big"
 )
+
+type msgType struct {
+	Data json.RawMessage
+	Type string
+}
 
 func main() {
 	fmt.Println("Start!")

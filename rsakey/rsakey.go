@@ -21,12 +21,14 @@ func main() {
 		// fmt.Println("N : ", rsaPublicKey.N)
 		// fmt.Println("E : ", rsaPublicKey.E)
 		// send N
-		encoded, errMarshal := json.Marshal(rsaPublicKey.N) // encode the N param
+		msg := map[string]interface{}{"data": rsaPublicKey.N, "type": "publicKey"}
+		encoded, errMarshal := json.Marshal(msg) // encode the N param
 		if errMarshal == nil {
-			decoded := big.NewInt(0)
+			var decoded msgType
 			errUnmarshall := json.Unmarshal(encoded, &decoded)
 			if errUnmarshall == nil {
-				fmt.Println(decoded.Cmp(rsaPublicKey.N) == 0)
+				fmt.Println(decoded)
+				// fmt.Println(decoded.Cmp(rsaPublicKey.N) == 0)
 			} else {
 				fmt.Println("UnMarshal error", errUnmarshall)
 			}
@@ -34,6 +36,6 @@ func main() {
 			fmt.Println("Marshal error", errMarshal)
 		}
 	} else {
-		fmt.Println("Rsa key generation Error!", err)
+		fmt.Println("Rsa key generation Error!", errKey)
 	}
 }

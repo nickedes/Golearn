@@ -13,13 +13,17 @@ type msgType struct {
 	Type string
 }
 
-type Identity struct {
+type IDENTITY struct {
 	IP              string
 	PK              rsa.PublicKey
 	CommitteeID     int64
 	PoW             map[string]interface{}
 	EpochRandomness string
 	Port            int
+}
+
+type Dmsg struct {
+	Identity IDENTITY
 }
 
 func test(rsakey *rsa.PrivateKey) {

@@ -67,16 +67,20 @@ func main() {
 	a := make([]int, 0)
 	PoW := map[string]interface{}{"nonce": 12, "hash": "31718973312319203130abcdefd", "list": a}
 
-	identity := Identity{IP: "2.0.1.0", PK: PK, CommitteeID: 2, PoW: PoW, EpochRandomness: "0011", Port: 49125}
+	identity := IDENTITY{IP: "2.0.1.0", PK: PK, CommitteeID: 2, PoW: PoW, EpochRandomness: "0011", Port: 49125}
 
-	mp := map[string]interface{}{"data": identity, "type": "lol"}
+	data1 := Dmsg{identity}
+	mp := map[string]interface{}{"data": data1, "type": "lol"}
 
 	data, err := json.Marshal(mp)
 	if err == nil {
 		var id msgType
 		_ = json.Unmarshal(data, &id)
 
-		fmt.Println(id)
+		var identity2 Dmsg
+
+		_ = json.Unmarshal(id.Data, &identity2)
+		fmt.Println(identity2.Identity)
 	}
 
 }

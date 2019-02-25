@@ -45,6 +45,34 @@ func test(rsakey *rsa.PrivateKey) {
 			fmt.Println("UnMarshal error", errUnmarshall)
 		}
 	} else {
+		fmt.Println("Marshal error", errMarshal)
+	}
+}
+
+func main() {
+	fmt.Println("Start!")
+	rsakey, errKey := rsa.GenerateKey(rand.Reader, 2048)
+	if errKey == nil {
+		test(rsakey)
+	} else {
 		fmt.Println("Rsa key generation Error!", errKey)
 	}
+
+	PK := rsakey.PublicKey
+
+	a := make([]int, 0)
+	PoW := map[string]interface{}{"nonce": 12, "hash": "31718973312319203130abcdefd", "list": a}
+
+	identity := Identity{IP: "2.0.1.0", PK: PK, CommitteeID: 2, PoW: PoW, EpochRandomness: "0011", Port: 49125}
+
+	mp := map[string]interface{}{"data": identity, "type": "lol"}
+
+	data, err := json.Marshal(mp)
+	if err == nil {
+		var id msgType
+		_ = json.Unmarshal(data, &id)
+
+		fmt.Println(id)
+	}
+
 }
